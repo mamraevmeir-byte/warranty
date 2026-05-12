@@ -2,630 +2,732 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#0f1117">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="אחריות">
 <title>ניהול אחריות</title>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0f1117;--bg2:#181c27;--bg3:#1e2235;--bd:rgba(255,255,255,0.1);--bd2:rgba(255,255,255,0.2);--tx:#f0f2ff;--mu:#a0a5c0;--gr:#22c55e;--ye:#f59e0b;--rd:#ef4444;--bl:#6366f1;}
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%;background:var(--bg);font-family:'Heebo',-apple-system,sans-serif;color:var(--tx);-webkit-text-fill-color:var(--tx);-webkit-font-smoothing:antialiased;}
-input,select,button,span,div,p,label,h1,h2,a{color:inherit;-webkit-text-fill-color:inherit;font-family:inherit;}
-.screen{display:none;flex-direction:column;min-height:100dvh;min-height:-webkit-fill-available;}
-.screen.active{display:flex;}
-/* TOPBAR */
-.topbar{padding:56px 20px 12px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
-.topbar h1{font-size:22px;font-weight:700;color:var(--tx);-webkit-text-fill-color:var(--tx);}
-.sub{font-size:12px;color:var(--mu);-webkit-text-fill-color:var(--mu);margin-top:3px;}
-.circ{width:40px;height:40px;border-radius:50%;background:var(--bg3);border:1px solid var(--bd2);display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;flex-shrink:0;color:var(--tx);-webkit-text-fill-color:var(--tx);}
-/* STATS */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 20px 14px;flex-shrink:0;}
-.sbox{background:var(--bg2);border:1px solid var(--bd);border-radius:10px;padding:10px 4px;text-align:center;}
-.snum{font-size:20px;font-weight:700;line-height:1;}
-.slbl{font-size:10px;color:var(--mu);-webkit-text-fill-color:var(--mu);margin-top:3px;}
-/* PILLS */
-.pills{display:flex;gap:6px;padding:0 20px 12px;overflow-x:auto;flex-shrink:0;scrollbar-width:none;}
-.pills::-webkit-scrollbar{display:none;}
-.pill{font-size:12px;padding:6px 14px;border-radius:20px;border:1px solid var(--bd2);background:transparent;color:var(--mu);-webkit-text-fill-color:var(--mu);white-space:nowrap;cursor:pointer;}
-.pill.on{background:rgba(99,102,241,0.2);border-color:var(--bl);color:var(--tx);-webkit-text-fill-color:var(--tx);}
-/* NOTICE */
-.notice{margin:0 20px 12px;padding:11px 14px;border-radius:10px;font-size:13px;cursor:pointer;flex-shrink:0;}
-.notice.blue{background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);color:var(--tx);-webkit-text-fill-color:var(--tx);}
-.notice.yellow{background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.3);color:var(--ye);-webkit-text-fill-color:var(--ye);}
-/* LIST */
-.list{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 20px 30px;display:flex;flex-direction:column;gap:10px;}
-/* CARD */
-.card{background:var(--bg2);border:1px solid var(--bd);border-radius:16px;padding:14px 16px;cursor:pointer;}
-.card:active{opacity:0.8;}
-.card.g{border-right:3px solid var(--gr);}
-.card.y{border-right:3px solid var(--ye);}
-.card.r{border-right:3px solid var(--rd);}
-.ctop{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
-.cname{font-size:15px;font-weight:500;color:var(--tx);-webkit-text-fill-color:var(--tx);}
-.cbrand{font-size:12px;color:var(--mu);-webkit-text-fill-color:var(--mu);margin-top:2px;}
-.badge{font-size:11px;font-weight:700;padding:4px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
-.badge.g{background:rgba(34,197,94,0.12);color:var(--gr);-webkit-text-fill-color:var(--gr);}
-.badge.y{background:rgba(245,158,11,0.12);color:var(--ye);-webkit-text-fill-color:var(--ye);}
-.badge.r{background:rgba(239,68,68,0.12);color:var(--rd);-webkit-text-fill-color:var(--rd);}
-.badge.mu{background:var(--bg3);color:var(--mu);-webkit-text-fill-color:var(--mu);}
-.cmeta{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;}
-.chip{font-size:11px;color:var(--mu);-webkit-text-fill-color:var(--mu);display:flex;align-items:center;gap:3px;}
-.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-/* EMPTY */
-.empty{padding:60px 20px;text-align:center;color:var(--mu);-webkit-text-fill-color:var(--mu);font-size:14px;}
-/* FAB */
+:root {
+  --bg: #0f1117;
+  --bg2: #181c27;
+  --bg3: #1e2235;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.15);
+  --text: #f0f2ff;
+  --muted: #8b90a8;
+  --green: #22c55e;
+  --green-bg: rgba(34,197,94,0.1);
+  --yellow: #f59e0b;
+  --yellow-bg: rgba(245,158,11,0.1);
+  --red: #ef4444;
+  --red-bg: rgba(239,68,68,0.1);
+  --blue: #6366f1;
+  --blue-bg: rgba(99,102,241,0.15);
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'Heebo', sans-serif; overscroll-behavior: none; }
 
-/* MODAL */
-.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;align-items:flex-end;}
-.ov.open{display:flex;}
-.sheet{background:var(--bg2);border-radius:24px 24px 0 0;width:100%;max-height:92dvh;display:flex;flex-direction:column;border-top:1px solid var(--bd2);}
-.handle{width:36px;height:4px;background:var(--bd2);border-radius:2px;margin:12px auto 0;flex-shrink:0;}
-.mhead{padding:14px 20px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--bd);flex-shrink:0;}
-.mtitle{font-size:17px;font-weight:600;color:var(--tx);-webkit-text-fill-color:var(--tx);}
-.mbody{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:18px 20px;display:flex;flex-direction:column;gap:14px;}
-.mfoot{padding:14px 20px;padding-bottom:max(14px,env(safe-area-inset-bottom,14px));border-top:1px solid var(--bd);display:flex;gap:10px;flex-shrink:0;}
+/* SCREENS */
+.screen { display: none; flex-direction: column; height: 100dvh; }
+.screen.active { display: flex; }
+
+/* TOP BAR */
+.topbar { padding: 52px 20px 16px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.topbar h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
+.topbar-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
+.icon-btn { width: 42px; height: 42px; border-radius: 50%; background: var(--bg3); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text); font-size: 18px; flex-shrink: 0; }
+.icon-btn:active { opacity: 0.7; }
+
+/* STATS ROW */
+.stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; padding: 0 20px 16px; flex-shrink: 0; }
+.stat-box { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 8px; text-align: center; }
+.stat-num { font-size: 20px; font-weight: 700; line-height: 1; }
+.stat-lbl { font-size: 10px; color: var(--muted); margin-top: 3px; }
+
+/* FILTER PILLS */
+.pills { display: flex; gap: 6px; padding: 0 20px 14px; overflow-x: auto; flex-shrink: 0; scrollbar-width: none; }
+.pills::-webkit-scrollbar { display: none; }
+.pill { font-size: 12px; padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; white-space: nowrap; transition: all 0.15s; }
+.pill.active { background: var(--blue-bg); border-color: var(--blue); color: var(--text); }
+
+/* LIST */
+.list { flex: 1; overflow-y: auto; padding: 0 20px 100px; display: flex; flex-direction: column; gap: 10px; }
+
+/* ITEM CARD */
+.item-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; cursor: pointer; transition: border-color 0.15s; }
+.item-card:active { opacity: 0.85; }
+.item-card.green { border-right: 3px solid var(--green); }
+.item-card.yellow { border-right: 3px solid var(--yellow); }
+.item-card.red { border-right: 3px solid var(--red); }
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.card-name { font-size: 15px; font-weight: 500; }
+.card-brand { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.days-badge { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
+.days-badge.green { background: var(--green-bg); color: var(--green); }
+.days-badge.yellow { background: var(--yellow-bg); color: var(--yellow); }
+.days-badge.red { background: var(--red-bg); color: var(--red); }
+.card-meta { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+.meta-chip { font-size: 11px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+.ins-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+/* EMPTY STATE */
+.empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: var(--muted); }
+.empty-icon { font-size: 48px; opacity: 0.3; }
+
+/* FAB */
+.fab { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 100; }
+.fab-btn { display: flex; align-items: center; gap: 8px; padding: 14px 22px; border-radius: 50px; border: none; cursor: pointer; font-family: 'Heebo', sans-serif; font-size: 14px; font-weight: 500; transition: transform 0.15s, opacity 0.15s; }
+.fab-btn:active { transform: scale(0.96); opacity: 0.85; }
+.fab-scan { background: var(--blue); color: #fff; }
+.fab-add { background: var(--bg3); color: var(--text); border: 1px solid var(--border2); }
+
+/* MODAL OVERLAY */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200; align-items: flex-end; }
+.modal-overlay.open { display: flex; }
+.modal { background: var(--bg2); border-radius: 24px 24px 0 0; width: 100%; max-height: 92dvh; display: flex; flex-direction: column; border-top: 1px solid var(--border2); }
+.modal-handle { width: 36px; height: 4px; background: var(--border2); border-radius: 2px; margin: 12px auto 0; flex-shrink: 0; }
+.modal-header { padding: 16px 20px 12px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; border-bottom: 1px solid var(--border); }
+.modal-title { font-size: 17px; font-weight: 600; }
+.modal-body { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.modal-footer { padding: 16px 20px; border-top: 1px solid var(--border); display: flex; gap: 10px; flex-shrink: 0; }
+
 /* FORM */
-.fld{display:flex;flex-direction:column;gap:5px;}
-.fld label{font-size:12px;font-weight:500;color:var(--mu);-webkit-text-fill-color:var(--mu);letter-spacing:0.3px;}
-.fld input,.fld select{background:var(--bg3);border:1px solid var(--bd2);border-radius:10px;padding:12px 14px;color:var(--tx);-webkit-text-fill-color:var(--tx);font-size:16px;width:100%;-webkit-appearance:none;appearance:none;outline:none;}
-.fld input::placeholder{color:var(--mu);-webkit-text-fill-color:var(--mu);opacity:0.6;}
-.fld input:focus,.fld select:focus{border-color:var(--bl);}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.slbl{font-size:11px;font-weight:600;color:var(--mu);-webkit-text-fill-color:var(--mu);text-transform:uppercase;letter-spacing:0.8px;}
-.togrow{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--bg3);border-radius:10px;border:1px solid var(--bd);}
-.togrow span{font-size:14px;color:var(--tx);-webkit-text-fill-color:var(--tx);}
-.tog{width:44px;height:26px;background:var(--bd2);border-radius:13px;position:relative;cursor:pointer;border:none;flex-shrink:0;transition:background 0.2s;}
-.tog.on{background:var(--bl);}
-.tog::after{content:'';position:absolute;top:3px;right:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:transform 0.2s;}
-.tog.on::after{transform:translateX(-18px);}
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 12px; color: var(--muted); font-weight: 500; letter-spacing: 0.3px; }
+.field input, .field select { background: var(--bg3); border: 1px solid var(--border2); border-radius: var(--radius-sm); padding: 12px 14px; color: var(--text); font-family: 'Heebo', sans-serif; font-size: 15px; width: 100%; appearance: none; -webkit-appearance: none; }
+.field input:focus, .field select:focus { outline: none; border-color: var(--blue); }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.section-lbl { font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; padding-top: 4px; }
+.toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; background: var(--bg3); border-radius: var(--radius-sm); border: 1px solid var(--border); }
+.toggle-row span { font-size: 14px; }
+.toggle { width: 44px; height: 26px; background: var(--border2); border-radius: 13px; position: relative; cursor: pointer; transition: background 0.2s; flex-shrink: 0; }
+.toggle.on { background: var(--blue); }
+.toggle::after { content:''; position: absolute; top: 3px; right: 3px; width: 20px; height: 20px; background: #fff; border-radius: 50%; transition: transform 0.2s; }
+.toggle.on::after { transform: translateX(-18px); }
+
 /* BUTTONS */
-.btn{flex:1;padding:14px;border-radius:10px;border:none;font-size:15px;font-weight:600;cursor:pointer;}
-.btn:active{opacity:0.8;}
-.btn.pri{background:var(--bl);color:#fff;-webkit-text-fill-color:#fff;}
-.btn.sec{background:var(--bg3);color:var(--mu);-webkit-text-fill-color:var(--mu);border:1px solid var(--bd2);}
-.xbtn{width:32px;height:32px;border-radius:50%;background:transparent;border:1px solid var(--bd2);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;color:var(--tx);-webkit-text-fill-color:var(--tx);flex-shrink:0;}
-/* DETAIL */
-.drow{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--bd);}
-.drow:last-child{border-bottom:none;}
-.dlbl{font-size:13px;color:var(--mu);-webkit-text-fill-color:var(--mu);}
-.dval{font-size:13px;font-weight:500;color:var(--tx);-webkit-text-fill-color:var(--tx);}
-.lbtn{font-size:12px;color:var(--bl);-webkit-text-fill-color:var(--bl);background:rgba(99,102,241,0.15);border:none;padding:5px 12px;border-radius:8px;cursor:pointer;}
-/* SCAN */
-#scan-screen{background:#000;position:fixed;inset:0;z-index:5000;overflow:hidden;}
-#cam{width:100%;height:100dvh;object-fit:cover;position:absolute;inset:0;}
-.sov{position:absolute;inset:0;z-index:5001;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;}
-.sfr{width:270px;height:170px;border:2px solid rgba(255,255,255,0.5);border-radius:12px;position:relative;}
-.sfr::before{content:'';position:absolute;top:-2px;right:-2px;width:28px;height:28px;border:3px solid var(--bl);border-width:3px 3px 0 0;border-radius:0 8px 0 0;}
-.sfr::after{content:'';position:absolute;bottom:-2px;left:-2px;width:28px;height:28px;border:3px solid var(--bl);border-width:0 0 3px 3px;border-radius:0 0 0 8px;}
-.sbar{position:absolute;left:0;right:0;height:2px;background:var(--bl);animation:scan 2s ease-in-out infinite;}
-@keyframes scan{0%,100%{top:0}50%{top:calc(100% - 2px)}}
-.shint{color:rgba(255,255,255,0.8);-webkit-text-fill-color:rgba(255,255,255,0.8);font-size:14px;margin-top:18px;}
-.sacts{position:absolute;bottom:max(40px,env(safe-area-inset-bottom,40px));left:0;right:0;z-index:5002;display:flex;justify-content:center;gap:14px;padding:0 20px;}
-.sbtn{padding:13px 26px;border-radius:50px;border:none;font-size:15px;font-weight:600;cursor:pointer;}
-.sbtn:active{opacity:0.8;}
-.scap{background:#fff;color:#000;-webkit-text-fill-color:#000;}
-.scan{background:rgba(255,255,255,0.15);color:#fff;-webkit-text-fill-color:#fff;border:1px solid rgba(255,255,255,0.3);}
-#scanvas{display:none;}
-.proc{position:absolute;inset:0;z-index:5003;background:rgba(0,0,0,0.85);display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
-.proc.show{display:flex;}
-.spin{width:38px;height:38px;border:3px solid rgba(255,255,255,0.15);border-top-color:var(--bl);border-radius:50%;animation:sp 0.8s linear infinite;}
-@keyframes sp{to{transform:rotate(360deg)}}
-.proc p{color:#fff;-webkit-text-fill-color:#fff;font-size:15px;}
-/* CONFIG */
-.cfgnote{font-size:12px;line-height:1.7;color:var(--mu);-webkit-text-fill-color:var(--mu);background:var(--bg3);border-radius:10px;padding:12px 14px;}
-.cfgnote b{color:var(--tx);-webkit-text-fill-color:var(--tx);}
-.cfgnote span{color:var(--bl);-webkit-text-fill-color:var(--bl);}
+.btn { flex: 1; padding: 14px; border-radius: var(--radius-sm); border: none; font-family: 'Heebo', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: opacity 0.15s; }
+.btn:active { opacity: 0.8; }
+.btn-primary { background: var(--blue); color: #fff; }
+.btn-secondary { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
+
+/* SCAN SCREEN */
+#scan-screen { background: #000; position: relative; }
+#camera-view { width: 100%; height: 100%; object-fit: cover; }
+.scan-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
+.scan-frame { width: 280px; height: 180px; border: 2px solid rgba(255,255,255,0.8); border-radius: 12px; position: relative; }
+.scan-frame::before, .scan-frame::after { content:''; position: absolute; width: 30px; height: 30px; border-color: var(--blue); border-style: solid; }
+.scan-frame::before { top: -2px; right: -2px; border-width: 3px 3px 0 0; border-radius: 0 10px 0 0; }
+.scan-frame::after { bottom: -2px; left: -2px; border-width: 0 0 3px 3px; border-radius: 0 0 0 10px; }
+.scan-hint { color: rgba(255,255,255,0.8); font-size: 14px; margin-top: 20px; text-align: center; }
+.scan-bar { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--blue); animation: scanline 2s ease-in-out infinite; opacity: 0.8; border-radius: 1px; }
+@keyframes scanline { 0%,100% { top: 0; } 50% { top: calc(100% - 2px); } }
+.scan-actions { position: absolute; bottom: 50px; left: 0; right: 0; display: flex; justify-content: center; gap: 16px; padding: 0 20px; pointer-events: all; }
+.scan-btn { padding: 14px 28px; border-radius: 50px; border: none; font-family: 'Heebo', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; }
+.scan-capture { background: #fff; color: #000; }
+.scan-cancel { background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.3); }
+#scan-canvas { display: none; }
+
+/* PROCESSING OVERLAY */
+.processing { position: absolute; inset: 0; background: rgba(0,0,0,0.85); display: none; flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
+.processing.show { display: flex; }
+.spinner { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--blue); border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.processing p { color: #fff; font-size: 15px; }
+
+/* DETAIL MODAL extras */
+.detail-section { display: flex; flex-direction: column; gap: 8px; }
+.detail-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.detail-row:last-child { border-bottom: none; }
+.detail-label { font-size: 13px; color: var(--muted); }
+.detail-value { font-size: 13px; font-weight: 500; text-align: left; }
+.link-btn { font-size: 12px; color: var(--blue); background: var(--blue-bg); border: none; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-family: 'Heebo', sans-serif; }
+
+/* ALERT BANNER */
+.alert-banner { margin: 0 20px 12px; padding: 10px 14px; background: var(--yellow-bg); border: 1px solid rgba(245,158,11,0.3); border-radius: var(--radius-sm); font-size: 13px; color: var(--yellow); display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 </style>
 </head>
 <body>
 
-<!-- MAIN -->
+<!-- MAIN SCREEN -->
 <div class="screen active" id="main-screen">
   <div class="topbar">
-    <div class="circ" id="sync-btn">↻</div>
     <div>
-      <h1>🛡️ אחריות מוצרים</h1>
-      <div class="sub" id="sub">טוען...</div>
+      <h1>אחריות מוצרים 🛡️</h1>
+      <div class="topbar-sub" id="last-sync">טוען...</div>
     </div>
-    <div class="circ" onclick="goAdd()" style="background:var(--bl);border-color:var(--bl);font-size:22px;font-weight:300;">＋</div>
+    <div class="icon-btn" onclick="syncSheets()" id="sync-btn" title="סנכרן עם Sheets">↻</div>
   </div>
-  <div id="notices"></div>
-  <div class="stats">
-    <div class="sbox"><div class="snum" style="color:var(--gr);-webkit-text-fill-color:var(--gr)" id="sok">0</div><div class="slbl">בתוקף</div></div>
-    <div class="sbox"><div class="snum" style="color:var(--ye);-webkit-text-fill-color:var(--ye)" id="swarn">0</div><div class="slbl">פג בקרוב</div></div>
-    <div class="sbox"><div class="snum" style="color:var(--rd);-webkit-text-fill-color:var(--rd)" id="sexp">0</div><div class="slbl">פג תוקף</div></div>
-    <div class="sbox"><div class="snum" style="color:var(--bl);-webkit-text-fill-color:var(--bl)" id="sins">0</div><div class="slbl">מבוטח</div></div>
-  </div>
-  <div class="pills">
-    <button class="pill on" onclick="filt('all',this)">הכל</button>
-    <button class="pill" onclick="filt('g',this)">בתוקף</button>
-    <button class="pill" onclick="filt('y',this)">פג בקרוב</button>
-    <button class="pill" onclick="filt('r',this)">פג תוקף</button>
-    <button class="pill" onclick="filt('ins',this)">ביטוח בית</button>
-    <button class="pill" onclick="filt('appliance',this)">מכשירי בית</button>
-    <button class="pill" onclick="filt('electronics',this)">אלקטרוניקה</button>
-  </div>
-  <div class="list" id="list"></div>
 
-</div>
+  <div id="alert-zone"></div>
 
-<!-- SCAN -->
-<div class="screen" id="scan-screen" style="display:none">
-  <video id="cam" autoplay playsinline muted></video>
-  <canvas id="scanvas"></canvas>
-  <div class="sov">
-    <div class="sfr"><div class="sbar"></div></div>
-    <div class="shint">כוון את המצלמה לחשבונית</div>
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-num" style="color:var(--green)" id="s-ok">—</div><div class="stat-lbl">בתוקף</div></div>
+    <div class="stat-box"><div class="stat-num" style="color:var(--yellow)" id="s-warn">—</div><div class="stat-lbl">פג בקרוב</div></div>
+    <div class="stat-box"><div class="stat-num" style="color:var(--red)" id="s-exp">—</div><div class="stat-lbl">פג תוקף</div></div>
+    <div class="stat-box"><div class="stat-num" style="color:var(--blue)" id="s-ins">—</div><div class="stat-lbl">מבוטח</div></div>
   </div>
-  <div class="proc" id="proc"><div class="spin"></div><p>מנתח עם AI...</p></div>
-  <div class="sacts">
-    <button class="sbtn scan" onclick="cancelScan()">ביטול</button>
-    <button class="sbtn scap" onclick="snap()">📸 צלם</button>
+
+  <div class="pills" id="pills">
+    <button class="pill active" onclick="setFilter('all',this)">הכל</button>
+    <button class="pill" onclick="setFilter('green',this)">בתוקף</button>
+    <button class="pill" onclick="setFilter('yellow',this)">פג בקרוב</button>
+    <button class="pill" onclick="setFilter('red',this)">פג תוקף</button>
+    <button class="pill" onclick="setFilter('insured',this)">ביטוח בית</button>
+    <button class="pill" onclick="setFilter('appliance',this)">מכשירי בית</button>
+    <button class="pill" onclick="setFilter('electronics',this)">אלקטרוניקה</button>
+  </div>
+
+  <div class="list" id="list">
+    <div class="empty"><div class="empty-icon">📦</div><p>טוען נתונים...</p></div>
+  </div>
+
+  <div class="fab">
+    <button class="fab-btn fab-scan" onclick="openScan()">📷 סרוק חשבונית</button>
+    <button class="fab-btn fab-add" onclick="openAdd()">+ הוסף</button>
   </div>
 </div>
 
-<!-- ADD MODAL -->
-<div class="ov" id="add-ov">
- <div class="sheet">
-  <div class="handle"></div>
-  <div class="mhead">
-    <span class="mtitle">מוצר חדש</span>
-    <button class="xbtn" onclick="closeAdd()">✕</button>
+<!-- SCAN SCREEN -->
+<div class="screen" id="scan-screen">
+  <video id="camera-view" autoplay playsinline muted></video>
+  <canvas id="scan-canvas"></canvas>
+  <div class="scan-overlay">
+    <div class="scan-frame">
+      <div class="scan-bar"></div>
+    </div>
+    <div class="scan-hint">כוון את המצלמה לחשבונית</div>
   </div>
-  <div class="mbody">
-    <div class="slbl">פרטי מוצר</div>
-    <div class="fld"><label>שם המוצר *</label><input id="fn" type="text" placeholder="מקרר LG" autocomplete="off"></div>
-    <div class="row2">
-      <div class="fld"><label>מותג</label><input id="fb" type="text" placeholder="LG"></div>
-      <div class="fld"><label>קטגוריה</label>
-        <select id="fc">
-          <option value="appliance">מכשירי בית</option>
-          <option value="electronics">אלקטרוניקה</option>
-          <option value="furniture">ריהוט</option>
-          <option value="vehicle">רכב</option>
-          <option value="other">אחר</option>
-        </select>
+  <div class="processing" id="processing">
+    <div class="spinner"></div>
+    <p>מנתח חשבונית...</p>
+  </div>
+  <div class="scan-actions">
+    <button class="scan-btn scan-cancel" onclick="closeScan()">ביטול</button>
+    <button class="scan-btn scan-capture" onclick="capturePhoto()">📸 צלם</button>
+  </div>
+</div>
+
+<!-- ADD / EDIT MODAL -->
+<div class="modal-overlay" id="add-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">מוצר חדש</span>
+      <div class="icon-btn" onclick="closeAdd()" style="width:32px;height:32px;font-size:16px">✕</div>
+    </div>
+    <div class="modal-body">
+      <div class="section-lbl">פרטי מוצר</div>
+      <div class="field"><label>שם המוצר *</label><input type="text" id="f-name" placeholder="מקרר LG"></div>
+      <div class="field-row">
+        <div class="field"><label>מותג</label><input type="text" id="f-brand" placeholder="LG"></div>
+        <div class="field"><label>קטגוריה</label>
+          <select id="f-cat">
+            <option value="appliance">מכשירי בית</option>
+            <option value="electronics">אלקטרוניקה</option>
+            <option value="furniture">ריהוט</option>
+            <option value="vehicle">רכב</option>
+            <option value="other">אחר</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>תאריך רכישה *</label><input type="date" id="f-buy"></div>
+        <div class="field"><label>מחיר (₪)</label><input type="number" id="f-price" placeholder="2500"></div>
+      </div>
+
+      <div class="section-lbl">אחריות</div>
+      <div class="field-row">
+        <div class="field"><label>משך אחריות</label>
+          <select id="f-dur" onchange="toggleCustomDur(this)">
+            <option value="6">6 חודשים</option>
+            <option value="12" selected>שנה</option>
+            <option value="24">שנתיים</option>
+            <option value="36">3 שנים</option>
+            <option value="60">5 שנים</option>
+            <option value="custom">מותאם</option>
+          </select>
+        </div>
+        <div class="field" id="custom-dur-field" style="display:none"><label>חודשים</label><input type="number" id="f-custom" min="1" placeholder="18"></div>
+        <div class="field" id="note-field"><label>מס׳ חשבונית</label><input type="text" id="f-note" placeholder="4521"></div>
+      </div>
+
+      <div class="section-lbl">מקום רכישה ושירות</div>
+      <div class="field-row">
+        <div class="field"><label>חנות</label><input type="text" id="f-store" placeholder="כלל חשמל"></div>
+        <div class="field"><label>טלפון חנות</label><input type="tel" id="f-store-tel" placeholder="03-1234567"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>מעבדת שירות</label><input type="text" id="f-lab" placeholder="שירות LG"></div>
+        <div class="field"><label>טלפון מעבדה</label><input type="tel" id="f-lab-tel" placeholder="1-800-xxx"></div>
+      </div>
+
+      <div class="section-lbl">קישורים ב-NAS</div>
+      <div class="field"><label>נתיב חשבונית</label><input type="text" id="f-inv" placeholder="\\NAS\Docs\Warranties\..."></div>
+      <div class="field"><label>נתיב תעודת אחריות</label><input type="text" id="f-cert" placeholder="\\NAS\Docs\Warranties\..."></div>
+
+      <div class="section-lbl">ביטוח בית</div>
+      <div class="toggle-row">
+        <span>כלול בפוליסת ביטוח הבית</span>
+        <div class="toggle" id="ins-toggle" onclick="toggleIns()"></div>
+      </div>
+      <div id="ins-extra" style="display:none">
+        <div class="field-row" style="margin-top:12px">
+          <div class="field"><label>שווי מבוטח (₪)</label><input type="number" id="f-ins-val" placeholder="5000"></div>
+          <div class="field"><label>נתיב פוליסה</label><input type="text" id="f-ins-link" placeholder="\\NAS\..."></div>
+        </div>
       </div>
     </div>
-    <div class="row2">
-      <div class="fld"><label>תאריך רכישה *</label><input id="fd" type="date"></div>
-      <div class="fld"><label>מחיר (₪)</label><input id="fp" type="number" placeholder="2500" inputmode="numeric"></div>
-    </div>
-    <div class="slbl">אחריות</div>
-    <div class="row2">
-      <div class="fld"><label>משך</label>
-        <select id="fdr" onchange="chDur(this)">
-          <option value="6">6 חודשים</option>
-          <option value="12" selected>שנה</option>
-          <option value="24">שנתיים</option>
-          <option value="36">3 שנים</option>
-          <option value="60">5 שנים</option>
-          <option value="0">מותאם</option>
-        </select>
-      </div>
-      <div class="fld" id="fcu" style="display:none"><label>חודשים</label><input id="fcm" type="number" placeholder="18" inputmode="numeric"></div>
-      <div class="fld" id="fno"><label>מס׳ חשבונית</label><input id="fnote" type="text" placeholder="4521"></div>
-    </div>
-    <div class="slbl">קנייה ושירות</div>
-    <div class="row2">
-      <div class="fld"><label>חנות</label><input id="fst" type="text" placeholder="כלל חשמל"></div>
-      <div class="fld"><label>טלפון חנות</label><input id="fsp" type="tel" placeholder="03-xxx"></div>
-    </div>
-    <div class="row2">
-      <div class="fld"><label>מעבדה</label><input id="flb" type="text" placeholder="שירות LG"></div>
-      <div class="fld"><label>טלפון מעבדה</label><input id="flp" type="tel" placeholder="1-800-xxx"></div>
-    </div>
-    <div class="slbl">קבצים ב-NAS</div>
-    <button onclick="goScan()" style="display:flex;align-items:center;gap:8px;padding:12px 16px;border-radius:10px;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.35);color:var(--bl);-webkit-text-fill-color:var(--bl);font-size:14px;font-weight:600;cursor:pointer;width:100%;justify-content:center;">&#128247; סרוק חשבונית אוטומטית</button>
-    <div class="fld"><label>נתיב חשבונית</label><input id="finv" type="text" placeholder="\\NAS\Docs\חשבונית.pdf"></div>
-    <div class="fld"><label>נתיב תעודת אחריות</label><input id="fcrt" type="text" placeholder="\\NAS\Docs\אחריות.pdf"></div>
-    <div class="slbl">ביטוח בית</div>
-    <div class="togrow">
-      <span>כלול בפוליסת ביטוח הבית</span>
-      <button class="tog" id="itog" onclick="togIns()"></button>
-    </div>
-    <div id="iex" style="display:none">
-      <div class="row2" style="margin-top:10px">
-        <div class="fld"><label>שווי מבוטח (₪)</label><input id="fiv" type="number" placeholder="5000" inputmode="numeric"></div>
-        <div class="fld"><label>נתיב פוליסה</label><input id="fil" type="text" placeholder="\\NAS\..."></div>
-      </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeAdd()">ביטול</button>
+      <button class="btn btn-primary" onclick="saveItem()">שמור ב-Sheets</button>
     </div>
   </div>
-  <div class="mfoot">
-    <button class="btn sec" onclick="closeAdd()">ביטול</button>
-    <button class="btn pri" onclick="saveItem()">💾 שמור ב-Sheets</button>
-  </div>
- </div>
 </div>
 
 <!-- DETAIL MODAL -->
-<div class="ov" id="det-ov">
- <div class="sheet">
-  <div class="handle"></div>
-  <div class="mhead">
-    <span class="mtitle" id="det-title">פרטי מוצר</span>
-    <button class="xbtn" onclick="closeDet()">✕</button>
+<div class="modal-overlay" id="detail-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <span class="modal-title" id="detail-title">פרטי מוצר</span>
+      <div class="icon-btn" onclick="closeDetail()" style="width:32px;height:32px;font-size:16px">✕</div>
+    </div>
+    <div class="modal-body" id="detail-body"></div>
   </div>
-  <div class="mbody" id="det-body"></div>
- </div>
 </div>
 
 <!-- CONFIG MODAL -->
-<div class="ov" id="cfg-ov">
- <div class="sheet">
-  <div class="handle"></div>
-  <div class="mhead">
-    <span class="mtitle">⚙️ הגדרות</span>
-    <button class="xbtn" onclick="closeCfg()">✕</button>
-  </div>
-  <div class="mbody">
-    <div class="fld"><label>Spreadsheet ID</label><input id="csi" type="text" placeholder="1UqzhVnsDYqkS..." autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false"></div>
-    <div class="fld"><label>Google Sheets API Key</label><input id="cak" type="text" placeholder="AIza..." autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false"></div>
-    <div class="fld"><label>Anthropic API Key (לסריקה)</label><input id="cck" type="text" placeholder="sk-ant-..." autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false"></div>
-    <div class="cfgnote">
-      <b>Spreadsheet ID</b> — מה-URL של הגיליון:<br>
-      docs.google.com/spreadsheets/d/<span>ID_כאן</span>/edit<br><br>
-      <b>Google API Key</b> — מ-console.cloud.google.com<br>
-      <b>Anthropic Key</b> — מ-console.anthropic.com
+<div class="modal-overlay" id="config-modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <span class="modal-title">הגדרות</span>
+      <div class="icon-btn" onclick="closeConfig()" style="width:32px;height:32px;font-size:16px">✕</div>
+    </div>
+    <div class="modal-body">
+      <div class="field"><label>מזהה Google Sheet (Spreadsheet ID)</label>
+        <input type="text" id="cfg-sheet-id" placeholder="1UqzhVnsDYqkSuyaZ_yxi5fmhZa12Xkqvc7edS_xR4GA">
+      </div>
+      <div class="field"><label>Google API Key</label>
+        <input type="text" id="cfg-api-key" placeholder="AIza...">
+      </div>
+      <div class="field"><label>Anthropic API Key (לסריקת חשבוניות)</label>
+        <input type="text" id="cfg-claude-key" placeholder="sk-ant-...">
+      </div>
+      <p style="font-size:12px;color:var(--muted);line-height:1.6">
+        ה-Spreadsheet ID נמצא ב-URL של הגיליון שלך:<br>
+        docs.google.com/spreadsheets/d/<b>ID_כאן</b>/edit
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeConfig()">ביטול</button>
+      <button class="btn btn-primary" onclick="saveConfig()">שמור</button>
     </div>
   </div>
-  <div class="mfoot">
-    <button class="btn sec" onclick="closeCfg()">ביטול</button>
-    <button class="btn pri" onclick="saveCfg()">שמור וסנכרן</button>
-  </div>
- </div>
 </div>
 
 <script>
-// ── DATA ──
-var items = [];
-var curFilt = 'all';
-var insOn = false;
-var cam = null;
-
-var CATS = {appliance:'מכשירי בית',electronics:'אלקטרוניקה',furniture:'ריהוט',vehicle:'רכב',other:'אחר'};
+const CATS = {appliance:'מכשירי בית',electronics:'אלקטרוניקה',furniture:'ריהוט',vehicle:'רכב',other:'אחר'};
+const SHEET_NAME = 'Sheet1';
+let items = [], filter = 'all', insured = false, editingId = null;
+let cameraStream = null;
 
 // ── CONFIG ──
-function getCfg() {
+function loadConfig() {
   return {
-    sid: localStorage.getItem('sid') || '',
-    gak: localStorage.getItem('gak') || '',
-    cak: localStorage.getItem('cak') || ''
+    sheetId: localStorage.getItem('sheetId') || '',
+    apiKey: localStorage.getItem('apiKey') || '',
+    claudeKey: localStorage.getItem('claudeKey') || ''
   };
 }
+function saveConfig() {
+  localStorage.setItem('sheetId', document.getElementById('cfg-sheet-id').value.trim());
+  localStorage.setItem('apiKey', document.getElementById('cfg-api-key').value.trim());
+  localStorage.setItem('claudeKey', document.getElementById('cfg-claude-key').value.trim());
+  closeConfig();
+  syncSheets();
+}
+function openConfig() {
+  const c = loadConfig();
+  document.getElementById('cfg-sheet-id').value = c.sheetId;
+  document.getElementById('cfg-api-key').value = c.apiKey;
+  document.getElementById('cfg-claude-key').value = c.claudeKey;
+  document.getElementById('config-modal').classList.add('open');
+}
+function closeConfig() { document.getElementById('config-modal').classList.remove('open'); }
 
-function openCfg() {
-  var c = getCfg();
-  document.getElementById('csi').value = c.sid;
-  document.getElementById('cak').value = c.gak;
-  document.getElementById('cck').value = c.cak;
-  document.getElementById('cfg-ov').classList.add('open');
-}
-function closeCfg() { document.getElementById('cfg-ov').classList.remove('open'); }
-function saveCfg() {
-  localStorage.setItem('sid', document.getElementById('csi').value.trim());
-  localStorage.setItem('gak', document.getElementById('cak').value.trim());
-  localStorage.setItem('cak', document.getElementById('cck').value.trim());
-  closeCfg();
-  sync();
-}
-
-// ── SYNC ──
-function sync() {
-  var c = getCfg();
-  if (!c.sid || !c.gak) { demoData(); render(); showNote(); return; }
-  document.getElementById('sub').textContent = 'מסנכרן...';
-  var url = 'https://sheets.googleapis.com/v4/spreadsheets/' + c.sid + '/values/Sheet1?key=' + c.gak;
-  fetch(url)
-    .then(function(r){ return r.json(); })
-    .then(function(d){
-      var rows = (d.values || []).slice(1);
-      var catMap = {'מכשירי בית':'appliance','אלקטרוניקה':'electronics','ריהוט':'furniture','רכב':'vehicle'};
-      items = rows.filter(function(r){ return r[0]; }).map(function(r,i){
-        return {
-          id:i, name:r[0]||'', brand:r[1]||'',
-          cat: catMap[r[2]] || 'other',
-          buy:r[3]||'', price:r[4]||'', exp:r[5]||'',
-          store:r[8]||'', storeTel:r[9]||'', lab:r[10]||'', labTel:r[11]||'',
-          note:r[12]||'', insured:r[13]==='כן', insVal:r[14]||'',
-          inv:r[15]||'', cert:r[16]||'', insLink:r[17]||''
-        };
-      });
-      var t = new Date().toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'});
-      document.getElementById('sub').textContent = 'עודכן ' + t;
-      document.getElementById('notices').innerHTML = '';
-      render();
-    })
-    .catch(function(){
-      document.getElementById('sub').textContent = 'שגיאה — בדוק הגדרות';
-      showNote();
-    });
+// ── SHEETS SYNC ──
+async function syncSheets() {
+  const { sheetId, apiKey } = loadConfig();
+  if (!sheetId || !apiKey) {
+    // First time — show demo data + prompt config
+    loadDemo();
+    showConfigPrompt();
+    return;
+  }
+  document.getElementById('sync-btn').style.opacity = '0.4';
+  document.getElementById('last-sync').textContent = 'מסנכרן...';
+  try {
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${SHEET_NAME}?key=${apiKey}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('שגיאת API');
+    const data = await res.json();
+    const rows = (data.values || []).slice(1);
+    items = rows.map((r, i) => ({
+      id: i,
+      name: r[0] || '',
+      brand: r[1] || '',
+      cat: r[2] === 'מכשירי בית' ? 'appliance' : r[2] === 'אלקטרוניקה' ? 'electronics' : r[2] === 'ריהוט' ? 'furniture' : r[2] === 'רכב' ? 'vehicle' : 'other',
+      buy: r[3] || '',
+      price: r[4] || '',
+      exp: r[5] || '',
+      store: r[8] || '',
+      storeTel: r[9] || '',
+      lab: r[10] || '',
+      labTel: r[11] || '',
+      note: r[12] || '',
+      insured: r[13] === 'כן',
+      insVal: r[14] || '',
+      inv: r[15] || '',
+      cert: r[16] || '',
+      insLink: r[17] || ''
+    })).filter(i => i.name);
+    document.getElementById('last-sync').textContent = 'עודכן ' + new Date().toLocaleTimeString('he-IL', {hour:'2-digit',minute:'2-digit'});
+  } catch(e) {
+    document.getElementById('last-sync').textContent = 'שגיאת סנכרון — בדוק הגדרות';
+  }
+  document.getElementById('sync-btn').style.opacity = '1';
+  render();
 }
 
-function appendRow(row) {
-  var c = getCfg();
-  if (!c.sid || !c.gak) { alert('נא להגדיר חיבור Sheets'); openCfg(); return Promise.resolve(false); }
-  var url = 'https://sheets.googleapis.com/v4/spreadsheets/' + c.sid + '/values/Sheet1:append?valueInputOption=USER_ENTERED&key=' + c.gak;
-  return fetch(url, {
-    method: 'POST',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({values:[row]})
-  }).then(function(r){ return r.ok; });
+async function appendToSheet(row) {
+  const { sheetId, apiKey } = loadConfig();
+  if (!sheetId || !apiKey) { alert('נא להגדיר Sheets API תחילה'); openConfig(); return false; }
+  try {
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${SHEET_NAME}:append?valueInputOption=USER_ENTERED&key=${apiKey}`;
+    await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ values: [row] }) });
+    return true;
+  } catch(e) { alert('שגיאה בשמירה ל-Sheets'); return false; }
 }
 
-// ── DATES ──
-function parseD(s) {
-  if (!s) return null;
-  var p = String(s).split('/');
-  if (p.length === 3) return new Date(+p[2], +p[1]-1, +p[0]);
-  var d = new Date(s); return isNaN(d) ? null : d;
+// ── DATES & STATUS ──
+function parseDate(str) {
+  if (!str) return null;
+  const parts = str.toString().split('/');
+  if (parts.length === 3) return new Date(+parts[2], +parts[1]-1, +parts[0]);
+  return new Date(str);
 }
-function dLeft(exp) {
-  var d = parseD(exp); if (!d) return null;
+function daysLeft(exp) {
+  const d = parseDate(exp);
+  if (!d) return null;
   return Math.round((d - new Date()) / 864e5);
 }
-function stCls(dl) { return dl===null?'mu':dl<0?'r':dl<=60?'y':'g'; }
-function fmtDl(dl) {
-  if (dl===null) return {t:'אין תאריך',c:'mu'};
-  if (dl<0) return {t:'פג לפני '+Math.abs(dl)+' י׳',c:'r'};
-  if (dl===0) return {t:'פג היום',c:'r'};
-  if (dl<=60) return {t:'נותרו '+dl+' י׳',c:'y'};
-  return {t:'~'+Math.round(dl/30)+' חודשים',c:'g'};
+function status(dl) { return dl === null ? 'gray' : dl < 0 ? 'red' : dl <= 60 ? 'yellow' : 'green'; }
+function fmtDays(dl) {
+  if (dl === null) return {txt: 'אין תאריך', cls: 'gray'};
+  if (dl < 0) return {txt: 'פג לפני ' + Math.abs(dl) + ' י׳', cls: 'red'};
+  if (dl === 0) return {txt: 'פג היום', cls: 'red'};
+  if (dl <= 60) return {txt: 'נותרו ' + dl + ' י׳', cls: 'yellow'};
+  return {txt: '~' + Math.round(dl/30) + ' חודשים', cls: 'green'};
 }
-function fmtD(s) { var d=parseD(s); return d?d.toLocaleDateString('he-IL'):s||'—'; }
-function calcExp(buyStr, mo) {
-  var d = parseD(buyStr) || new Date();
-  d.setMonth(d.getMonth() + mo);
+function fmtDate(str) {
+  const d = parseDate(str);
+  return d ? d.toLocaleDateString('he-IL') : str;
+}
+function calcExp(buy, months) {
+  const d = parseDate(buy) || new Date();
+  d.setMonth(d.getMonth() + months);
   return d.toLocaleDateString('he-IL');
 }
 
 // ── RENDER ──
 function render() {
-  var all = items.map(function(i){ return Object.assign({},i,{dl:dLeft(i.exp)}); });
-  document.getElementById('sok').textContent   = all.filter(function(i){return stCls(i.dl)==='g';}).length;
-  document.getElementById('swarn').textContent = all.filter(function(i){return stCls(i.dl)==='y';}).length;
-  document.getElementById('sexp').textContent  = all.filter(function(i){return stCls(i.dl)==='r';}).length;
-  document.getElementById('sins').textContent  = all.filter(function(i){return i.insured;}).length;
+  const all = items.map(i => ({...i, dl: daysLeft(i.exp)}));
+  document.getElementById('s-ok').textContent = all.filter(i=>status(i.dl)==='green').length;
+  document.getElementById('s-warn').textContent = all.filter(i=>status(i.dl)==='yellow').length;
+  document.getElementById('s-exp').textContent = all.filter(i=>status(i.dl)==='red').length;
+  document.getElementById('s-ins').textContent = all.filter(i=>i.insured).length;
 
-  // alerts
-  var az = document.getElementById('notices');
-  var alerts = all.filter(function(i){return i.dl!==null && i.dl>=0 && i.dl<=30;});
-  var existAlert = az.querySelector('.notice.yellow');
-  if (alerts.length) {
-    var html = '<div class="notice yellow">⚠️ פג/ים בקרוב: ' + alerts.map(function(a){return a.name;}).join(', ') + '</div>';
-    if (existAlert) existAlert.outerHTML = html; else az.insertAdjacentHTML('afterbegin', html);
-  } else if (existAlert) existAlert.remove();
+  const alerts = all.filter(i => i.dl !== null && i.dl >= 0 && i.dl <= 30);
+  const az = document.getElementById('alert-zone');
+  az.innerHTML = alerts.length
+    ? `<div class="alert-banner">⚠️ ${alerts.length} מוצר${alerts.length>1?'ים':''} פג/ים תוקף בקרוב: ${alerts.map(a=>a.name).join(', ')}</div>`
+    : '';
 
-  var vis = all.filter(function(i){
-    var c = stCls(i.dl);
-    if (curFilt==='all') return true;
-    if (curFilt==='ins') return i.insured;
-    if (['g','y','r'].indexOf(curFilt)>=0) return c===curFilt;
-    return i.cat===curFilt;
-  }).sort(function(a,b){ return (a.dl!==null?a.dl:9999)-(b.dl!==null?b.dl:9999); });
+  let vis = all.filter(i => {
+    const st = status(i.dl);
+    if (filter === 'all') return true;
+    if (filter === 'insured') return i.insured;
+    if (['green','yellow','red'].includes(filter)) return st === filter;
+    return i.cat === filter;
+  }).sort((a,b) => (a.dl??9999) - (b.dl??9999));
 
-  var el = document.getElementById('list');
-  if (!vis.length) { el.innerHTML = '<div class="empty">אין מוצרים להצגה</div>'; return; }
-
-  el.innerHTML = vis.map(function(i){
-    var fd = fmtDl(i.dl), c = stCls(i.dl);
-    return '<div class="card '+c+'" onclick="openDet('+i.id+')">'
-      +'<div class="ctop"><div>'
-      +'<div class="cname">'+i.name+(i.brand?' · '+i.brand:'')+'</div>'
-      +'<div class="cbrand">'+( CATS[i.cat]||'' )+'</div>'
-      +'</div><div class="badge '+fd.c+'">'+fd.t+'</div></div>'
-      +'<div class="cmeta">'
-      +(i.buy?'<span class="chip">🗓 '+fmtD(i.buy)+'</span>':'')
-      +(i.price?'<span class="chip">₪'+parseInt(i.price).toLocaleString('he-IL')+'</span>':'')
-      +(i.store?'<span class="chip">🏪 '+i.store+'</span>':'')
-      +'<span class="chip"><span class="dot" style="background:'+(i.insured?'var(--gr)':'var(--mu)')+'"></span>'+(i.insured?'מבוטח':'לא מבוטח')+'</span>'
-      +'</div></div>';
+  const list = document.getElementById('list');
+  if (!vis.length) {
+    list.innerHTML = '<div class="empty"><div class="empty-icon">📦</div><p>אין מוצרים להצגה</p></div>';
+    return;
+  }
+  list.innerHTML = vis.map(i => {
+    const fd = fmtDays(i.dl);
+    const st = status(i.dl);
+    return `<div class="item-card ${st}" onclick="openDetail(${i.id})">
+      <div class="card-top">
+        <div>
+          <div class="card-name">${i.name}</div>
+          <div class="card-brand">${i.brand || ''}${i.brand && CATS[i.cat] ? ' · ' : ''}${CATS[i.cat]||''}</div>
+        </div>
+        <div class="days-badge ${fd.cls}">${fd.txt}</div>
+      </div>
+      <div class="card-meta">
+        ${i.buy ? `<span class="meta-chip">🗓 ${fmtDate(i.buy)}</span>` : ''}
+        ${i.price ? `<span class="meta-chip">₪${parseInt(i.price).toLocaleString('he-IL')}</span>` : ''}
+        ${i.store ? `<span class="meta-chip">🏪 ${i.store}</span>` : ''}
+        <span class="meta-chip"><span class="ins-dot" style="background:${i.insured?'var(--green)':'var(--muted)'}"></span>${i.insured?'מבוטח':'לא מבוטח'}</span>
+      </div>
+    </div>`;
   }).join('');
 }
 
-function filt(f, btn) {
-  curFilt = f;
-  document.querySelectorAll('.pill').forEach(function(b){b.classList.remove('on');});
-  btn.classList.add('on');
+function setFilter(f, btn) {
+  filter = f;
+  document.querySelectorAll('.pill').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
   render();
 }
 
 // ── DETAIL ──
-function openDet(id) {
-  var i = items.find(function(x){return x.id===id;}); if(!i) return;
-  var dl = dLeft(i.exp), fd = fmtDl(dl);
-  document.getElementById('det-title').textContent = i.name + (i.brand?' · '+i.brand:'');
-  document.getElementById('det-body').innerHTML =
-    '<div class="drow"><span class="dlbl">סטטוס</span><span class="badge '+fd.c+'">'+fd.t+'</span></div>'
-    +'<div class="drow"><span class="dlbl">קטגוריה</span><span class="dval">'+( CATS[i.cat]||i.cat )+'</span></div>'
-    +'<div class="drow"><span class="dlbl">תאריך רכישה</span><span class="dval">'+fmtD(i.buy)+'</span></div>'
-    +'<div class="drow"><span class="dlbl">פקיעת אחריות</span><span class="dval">'+fmtD(i.exp)+'</span></div>'
-    +(i.price?'<div class="drow"><span class="dlbl">מחיר</span><span class="dval">₪'+parseInt(i.price).toLocaleString('he-IL')+'</span></div>':'')
-    +(i.note?'<div class="drow"><span class="dlbl">חשבונית</span><span class="dval">'+i.note+'</span></div>':'')
-    +(i.store?'<div class="drow"><span class="dlbl">חנות</span><span class="dval">'+i.store+(i.storeTel?' · <a href="tel:'+i.storeTel+'" style="color:var(--bl);-webkit-text-fill-color:var(--bl)">'+i.storeTel+'</a>':'')+'</span></div>':'')
-    +(i.lab?'<div class="drow"><span class="dlbl">מעבדה</span><span class="dval">'+i.lab+(i.labTel?' · <a href="tel:'+i.labTel+'" style="color:var(--bl);-webkit-text-fill-color:var(--bl)">'+i.labTel+'</a>':'')+'</span></div>':'')
-    +(i.inv?'<div class="drow"><span class="dlbl">חשבונית (NAS)</span><button class="lbtn" onclick="alert(\''+i.inv+'\')">נתיב</button></div>':'')
-    +(i.cert?'<div class="drow"><span class="dlbl">אחריות (NAS)</span><button class="lbtn" onclick="alert(\''+i.cert+'\')">נתיב</button></div>':'')
-    +(i.insured?'<div class="drow"><span class="dlbl">ביטוח בית</span><span class="badge g">מבוטח</span></div>':'')
-    +(i.insured&&i.insVal?'<div class="drow"><span class="dlbl">שווי מבוטח</span><span class="dval">₪'+parseInt(i.insVal).toLocaleString('he-IL')+'</span></div>':'');
-  document.getElementById('det-ov').classList.add('open');
+function openDetail(id) {
+  const i = items.find(x => x.id === id);
+  if (!i) return;
+  const dl = daysLeft(i.exp);
+  const fd = fmtDays(dl);
+  document.getElementById('detail-title').textContent = i.name + (i.brand ? ' · ' + i.brand : '');
+  document.getElementById('detail-body').innerHTML = `
+    <div class="detail-section">
+      <div class="detail-row"><span class="detail-label">סטטוס</span><span class="days-badge ${fd.cls}">${fd.txt}</span></div>
+      <div class="detail-row"><span class="detail-label">קטגוריה</span><span class="detail-value">${CATS[i.cat]||i.cat}</span></div>
+      <div class="detail-row"><span class="detail-label">תאריך רכישה</span><span class="detail-value">${fmtDate(i.buy)}</span></div>
+      <div class="detail-row"><span class="detail-label">פקיעת אחריות</span><span class="detail-value">${fmtDate(i.exp)}</span></div>
+      ${i.price ? `<div class="detail-row"><span class="detail-label">מחיר רכישה</span><span class="detail-value">₪${parseInt(i.price).toLocaleString('he-IL')}</span></div>` : ''}
+      ${i.note ? `<div class="detail-row"><span class="detail-label">חשבונית</span><span class="detail-value">${i.note}</span></div>` : ''}
+    </div>
+    ${i.store || i.lab ? `
+    <div class="section-lbl" style="margin-top:16px">קנייה ושירות</div>
+    <div class="detail-section">
+      ${i.store ? `<div class="detail-row"><span class="detail-label">חנות</span><span class="detail-value">${i.store}${i.storeTel ? ' · <a href="tel:'+i.storeTel+'" style="color:var(--blue)">'+i.storeTel+'</a>' : ''}</span></div>` : ''}
+      ${i.lab ? `<div class="detail-row"><span class="detail-label">מעבדה</span><span class="detail-value">${i.lab}${i.labTel ? ' · <a href="tel:'+i.labTel+'" style="color:var(--blue)">'+i.labTel+'</a>' : ''}</span></div>` : ''}
+    </div>` : ''}
+    ${i.inv || i.cert || i.insLink ? `
+    <div class="section-lbl" style="margin-top:16px">קבצים ב-NAS</div>
+    <div class="detail-section">
+      ${i.inv ? `<div class="detail-row"><span class="detail-label">חשבונית</span><button class="link-btn" onclick="alert('${i.inv}')">פתח קובץ</button></div>` : ''}
+      ${i.cert ? `<div class="detail-row"><span class="detail-label">תעודת אחריות</span><button class="link-btn" onclick="alert('${i.cert}')">פתח קובץ</button></div>` : ''}
+      ${i.insLink ? `<div class="detail-row"><span class="detail-label">פוליסה</span><button class="link-btn" onclick="alert('${i.insLink}')">פתח קובץ</button></div>` : ''}
+    </div>` : ''}
+    ${i.insured ? `
+    <div class="section-lbl" style="margin-top:16px">ביטוח בית</div>
+    <div class="detail-section">
+      <div class="detail-row"><span class="detail-label">מבוטח</span><span class="days-badge green">כן</span></div>
+      ${i.insVal ? `<div class="detail-row"><span class="detail-label">שווי מבוטח</span><span class="detail-value">₪${parseInt(i.insVal).toLocaleString('he-IL')}</span></div>` : ''}
+    </div>` : ''}
+  `;
+  document.getElementById('detail-modal').classList.add('open');
 }
-function closeDet() { document.getElementById('det-ov').classList.remove('open'); }
+function closeDetail() { document.getElementById('detail-modal').classList.remove('open'); }
 
-// ── ADD ──
-function goAdd(pre) {
-  pre = pre || {};
-  document.getElementById('fn').value = pre.name||'';
-  document.getElementById('fb').value = pre.brand||'';
-  document.getElementById('fd').value = pre.date || new Date().toISOString().split('T')[0];
-  document.getElementById('fp').value = pre.price||'';
-  document.getElementById('fst').value = pre.store||'';
-  document.getElementById('fsp').value = '';
-  document.getElementById('flb').value = '';
-  document.getElementById('flp').value = '';
-  document.getElementById('fnote').value = pre.note||'';
-  document.getElementById('finv').value = '';
-  document.getElementById('fcrt').value = '';
-  insOn = false;
-  document.getElementById('itog').classList.remove('on');
-  document.getElementById('iex').style.display = 'none';
-  document.getElementById('add-ov').classList.add('open');
+// ── ADD / SAVE ──
+function openAdd(prefill = {}) {
+  editingId = null;
+  document.getElementById('modal-title').textContent = 'מוצר חדש';
+  document.getElementById('f-name').value = prefill.name || '';
+  document.getElementById('f-brand').value = prefill.brand || '';
+  document.getElementById('f-buy').value = prefill.buy || new Date().toISOString().split('T')[0];
+  document.getElementById('f-price').value = prefill.price || '';
+  document.getElementById('f-store').value = prefill.store || '';
+  document.getElementById('f-store-tel').value = '';
+  document.getElementById('f-lab').value = '';
+  document.getElementById('f-lab-tel').value = '';
+  document.getElementById('f-note').value = prefill.note || '';
+  document.getElementById('f-inv').value = '';
+  document.getElementById('f-cert').value = '';
+  insured = false;
+  document.getElementById('ins-toggle').classList.remove('on');
+  document.getElementById('ins-extra').style.display = 'none';
+  document.getElementById('add-modal').classList.add('open');
 }
-function closeAdd() { document.getElementById('add-ov').classList.remove('open'); }
+function closeAdd() { document.getElementById('add-modal').classList.remove('open'); }
 
-function togIns() {
-  insOn = !insOn;
-  document.getElementById('itog').classList.toggle('on', insOn);
-  document.getElementById('iex').style.display = insOn ? 'block' : 'none';
+function toggleIns() {
+  insured = !insured;
+  document.getElementById('ins-toggle').classList.toggle('on', insured);
+  document.getElementById('ins-extra').style.display = insured ? 'block' : 'none';
 }
-function chDur(sel) {
-  var isC = sel.value === '0';
-  document.getElementById('fcu').style.display = isC ? 'flex' : 'none';
-  document.getElementById('fno').style.display = isC ? 'none' : 'flex';
+function toggleCustomDur(sel) {
+  const show = sel.value === 'custom';
+  document.getElementById('custom-dur-field').style.display = show ? 'flex' : 'none';
+  document.getElementById('note-field').style.display = show ? 'none' : 'flex';
 }
 
-function saveItem() {
-  var name = document.getElementById('fn').value.trim();
-  var date = document.getElementById('fd').value;
-  if (!name||!date) { alert('נא למלא שם מוצר ותאריך רכישה'); return; }
-  var dur = document.getElementById('fdr').value;
-  var mo = dur==='0' ? (parseInt(document.getElementById('fcm').value)||12) : parseInt(dur);
-  var catMap = {appliance:'מכשירי בית',electronics:'אלקטרוניקה',furniture:'ריהוט',vehicle:'רכב',other:'אחר'};
-  var buyFmt = new Date(date).toLocaleDateString('he-IL');
-  var row = [
-    name, document.getElementById('fb').value.trim(),
-    catMap[document.getElementById('fc').value],
-    buyFmt, document.getElementById('fp').value.trim(),
-    calcExp(buyFmt, mo), '', '',
-    document.getElementById('fst').value.trim(),
-    document.getElementById('fsp').value.trim(),
-    document.getElementById('flb').value.trim(),
-    document.getElementById('flp').value.trim(),
-    document.getElementById('fnote').value.trim(),
-    insOn?'כן':'לא',
-    insOn?(document.getElementById('fiv').value.trim()||''):'',
-    document.getElementById('finv').value.trim(),
-    document.getElementById('fcrt').value.trim(),
-    insOn?(document.getElementById('fil').value.trim()||''):'', ''
+async function saveItem() {
+  const name = document.getElementById('f-name').value.trim();
+  const buy = document.getElementById('f-buy').value;
+  if (!name || !buy) { alert('נא למלא שם מוצר ותאריך רכישה'); return; }
+  const durSel = document.getElementById('f-dur').value;
+  let months = parseInt(durSel);
+  if (durSel === 'custom') { months = parseInt(document.getElementById('f-custom').value) || 12; }
+  const catVal = document.getElementById('f-cat').value;
+  const catHe = {appliance:'מכשירי בית', electronics:'אלקטרוניקה', furniture:'ריהוט', vehicle:'רכב', other:'אחר'}[catVal];
+  const buyFmt = new Date(buy).toLocaleDateString('he-IL');
+  const expFmt = calcExp(buyFmt, months);
+  const row = [
+    name,
+    document.getElementById('f-brand').value.trim(),
+    catHe, buyFmt,
+    document.getElementById('f-price').value.trim(),
+    expFmt, '', '',
+    document.getElementById('f-store').value.trim(),
+    document.getElementById('f-store-tel').value.trim(),
+    document.getElementById('f-lab').value.trim(),
+    document.getElementById('f-lab-tel').value.trim(),
+    document.getElementById('f-note').value.trim(),
+    insured ? 'כן' : 'לא',
+    insured ? (document.getElementById('f-ins-val').value.trim() || '') : '',
+    document.getElementById('f-inv').value.trim(),
+    document.getElementById('f-cert').value.trim(),
+    insured ? (document.getElementById('f-ins-link').value.trim() || '') : '',
+    ''
   ];
-  appendRow(row).then(function(ok){ if(ok){ closeAdd(); sync(); } });
+  const ok = await appendToSheet(row);
+  if (ok) { closeAdd(); await syncSheets(); }
 }
 
 // ── SCAN ──
-function goScan() {
-  // Close add modal if open
-  document.getElementById('add-ov').classList.remove('open');
-  // Show scan screen as overlay
-  var sc = document.getElementById('scan-screen');
-  sc.style.display = 'flex';
-  sc.classList.add('active');
-  navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:{ideal:1920},height:{ideal:1080}}})
-    .then(function(s){
-      cam = s;
-      document.getElementById('cam').srcObject = s;
-    })
-    .catch(function(){
-      alert('לא ניתן לגשת למצלמה');
-      showScr('main-screen');
+async function openScan() {
+  showScreen('scan-screen');
+  try {
+    cameraStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: 'environment', width:{ideal:1920}, height:{ideal:1080} }
     });
-}
-function cancelScan() {
-  if (cam) { cam.getTracks().forEach(function(t){t.stop();}); cam=null; }
-  var sc = document.getElementById('scan-screen');
-  sc.style.display = 'none';
-  sc.classList.remove('active');
-}
-function snap() {
-  var v = document.getElementById('cam');
-  var c = document.getElementById('scanvas');
-  c.width = v.videoWidth; c.height = v.videoHeight;
-  c.getContext('2d').drawImage(v,0,0);
-  var b64 = c.toDataURL('image/jpeg',0.85).split(',')[1];
-  var proc = document.getElementById('proc');
-  proc.classList.add('show');
-  var cak = getCfg().cak;
-  if (!cak) {
-    proc.classList.remove('show');
-    cancelScan(); openCfg(); return;
+    document.getElementById('camera-view').srcObject = cameraStream;
+  } catch(e) {
+    alert('לא ניתן לגשת למצלמה. וודא שנתת הרשאה.');
+    closeScan();
   }
-  var payload = JSON.stringify({
-    model:'claude-sonnet-4-20250514', max_tokens:400,
-    messages:[{role:'user',content:[
-      {type:'image',source:{type:'base64',media_type:'image/jpeg',data:b64}},
-      {type:'text',text:'\u05d7\u05dc\u05e5 \u05de\u05d4\u05d7\u05e9\u05d1\u05d5\u05e0\u05d9\u05ea JSON \u05d1\u05dc\u05d1\u05d3:\n{\"name\":\"\",\"brand\":\"\",\"store\":\"\",\"price\":\"\",\"date\":\"YYYY-MM-DD\",\"note\":\"\"}'}
-    ]}]
-  });
+}
 
-  function doFetch(url, hdrs) {
-    return fetch(url, {method:'POST', headers:hdrs, body:payload});
+function closeScan() {
+  if (cameraStream) { cameraStream.getTracks().forEach(t => t.stop()); cameraStream = null; }
+  showScreen('main-screen');
+}
+
+async function capturePhoto() {
+  const video = document.getElementById('camera-view');
+  const canvas = document.getElementById('scan-canvas');
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  canvas.getContext('2d').drawImage(video, 0, 0);
+  const base64 = canvas.toDataURL('image/jpeg', 0.9).split(',')[1];
+
+  const processing = document.getElementById('processing');
+  processing.classList.add('show');
+
+  const { claudeKey } = loadConfig();
+  if (!claudeKey) {
+    processing.classList.remove('show');
+    alert('נא להגדיר Anthropic API Key בהגדרות');
+    closeScan();
+    openConfig();
+    return;
   }
 
-  var directUrl = 'https://api.anthropic.com/v1/messages';
-  var proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(directUrl);
-  var hdrs = {'Content-Type':'application/json','x-api-key':cak,'anthropic-version':'2023-06-01'};
-
-  doFetch(directUrl, hdrs)
-    .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
-    .catch(function(){ return doFetch(proxyUrl, hdrs).then(function(r){ return r.json(); }); })
-    .then(function(d){
-      var txt = (d.content&&d.content[0]&&d.content[0].text)||'{}';
-      var p = {};
-      try { p = JSON.parse(txt.replace(/```json|```/g,'')); } catch(e){}
-      proc.classList.remove('show');
-      cancelScan();
-      goAdd(p);
-    })
-    .catch(function(e){
-      proc.classList.remove('show');
-      alert('\u05e9\u05d2\u05d9\u05d0\u05d4 \u05d1\u05e0\u05d9\u05ea\u05d5\u05d7 \u2014 \u05e0\u05e1\u05d4 \u05e9\u05d5\u05d1');
-      cancelScan();
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-api-key': claudeKey, 'anthropic-version': '2023-06-01' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{
+          role: 'user',
+          content: [
+            { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: base64 } },
+            { type: 'text', text: 'זוהי חשבונית. חלץ את המידע הבא בפורמט JSON בלבד, ללא טקסט נוסף:\n{"name":"שם המוצר","brand":"מותג","store":"שם החנות","price":"מחיר ספרות בלבד","date":"תאריך רכישה בפורמט YYYY-MM-DD","note":"מספר חשבונית אם קיים"}\nאם שדה לא נמצא, השאר ריק.' }
+          ]
+        }]
+      })
     });
-}
-
-// ── NAV ──
-function showScr(id) {
-  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
-  var el = document.getElementById(id);
-  el.classList.add('active');
-  // Scroll to top when switching screens
-  window.scrollTo(0,0);
-  document.body.scrollTop = 0;
-}
-
-function showNote() {
-  var az = document.getElementById('notices');
-  if (!az.querySelector('.notice.blue')) {
-    az.insertAdjacentHTML('beforeend','<div class="notice blue" onclick="openCfg()">⚙️ לחץ כאן לחיבור Google Sheets</div>');
+    const data = await res.json();
+    const text = data.content?.[0]?.text || '';
+    let parsed = {};
+    try { parsed = JSON.parse(text.replace(/```json|```/g,'')); } catch(e) {}
+    processing.classList.remove('show');
+    closeScan();
+    openAdd({
+      name: parsed.name || '',
+      brand: parsed.brand || '',
+      store: parsed.store || '',
+      price: parsed.price || '',
+      buy: parsed.date || '',
+      note: parsed.note || ''
+    });
+  } catch(e) {
+    processing.classList.remove('show');
+    alert('שגיאה בניתוח התמונה. נסה שוב.');
+    closeScan();
   }
 }
 
-// ── DEMO ──
-function demoData() {
-  document.getElementById('sub').textContent = 'נתוני דמו — לחץ ⚙️ לחיבור Sheets';
-  var tomorrow25 = new Date(Date.now()+25*864e5).toLocaleDateString('he-IL');
+// ── NAVIGATION ──
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function showConfigPrompt() {
+  const az = document.getElementById('alert-zone');
+  if (!az.querySelector('.config-prompt')) {
+    const el = document.createElement('div');
+    el.className = 'alert-banner config-prompt';
+    el.style.cursor = 'pointer';
+    el.innerHTML = '⚙️ לחץ כאן להגדרת חיבור Google Sheets';
+    el.onclick = openConfig;
+    az.appendChild(el);
+  }
+}
+
+// ── DEMO DATA ──
+function loadDemo() {
   items = [
-    {id:0,name:'מקרר',brand:'LG',cat:'appliance',buy:'10/01/2023',price:'4200',exp:'10/01/2028',store:'כלל חשמל',storeTel:'03-5551234',lab:'שירות LG',labTel:'1-700-500-580',note:'4521',insured:true,insVal:'5000',inv:'',cert:'',insLink:''},
-    {id:1,name:'מזגן',brand:'Tadiran',cat:'appliance',buy:'15/06/2022',price:'3800',exp:tomorrow25,store:'סופר-קול',storeTel:'09-7774321',lab:'תדיראן שירות',labTel:'*6112',note:'3892',insured:true,insVal:'4000',inv:'',cert:'',insLink:''},
-    {id:2,name:'מחשב נייד',brand:'Apple',cat:'electronics',buy:'01/09/2021',price:'7500',exp:'01/09/2023',store:'iDigital',storeTel:'03-7778899',lab:'Apple Service',labTel:'1-800-020-0200',note:'AppleCare',insured:false,insVal:'',inv:'',cert:'',insLink:''},
-    {id:3,name:'מכונת כביסה',brand:'Bosch',cat:'appliance',buy:'20/03/2024',price:'3200',exp:'20/03/2027',store:'שקם חשמל',storeTel:'04-8881122',lab:'Bosch שירות',labTel:'1-700-700-080',note:'7741',insured:false,insVal:'',inv:'',cert:'',insLink:''}
+    {id:0, name:'מקרר', brand:'LG', cat:'appliance', buy:'10/01/2023', price:'4200', exp:'10/01/2028', store:'כלל חשמל', storeTel:'03-5551234', lab:'שירות LG', labTel:'1-700-500-580', note:'4521', insured:true, insVal:'5000', inv:'', cert:'', insLink:''},
+    {id:1, name:'מזגן', brand:'Tadiran', cat:'appliance', buy:'15/06/2022', price:'3800', exp: new Date(Date.now()+25*864e5).toLocaleDateString('he-IL'), store:'סופר-קול', storeTel:'09-7774321', lab:'תדיראן שירות', labTel:'*6112', note:'3892', insured:true, insVal:'4000', inv:'', cert:'', insLink:''},
+    {id:2, name:'מחשב נייד', brand:'Apple', cat:'electronics', buy:'01/09/2021', price:'7500', exp:'01/09/2023', store:'iDigital', storeTel:'03-7778899', lab:'Apple Service', labTel:'1-800-020-0200', note:'AppleCare', insured:false, insVal:'', inv:'', cert:'', insLink:''},
+    {id:3, name:'מכונת כביסה', brand:'Bosch', cat:'appliance', buy:'20/03/2024', price:'3200', exp:'20/03/2027', store:'שקם חשמל', storeTel:'04-8881122', lab:'Bosch שירות', labTel:'1-700-700-080', note:'7741', insured:false, insVal:'', inv:'', cert:'', insLink:''},
   ];
 }
 
-// ── SYNC BTN ──
-var sb = document.getElementById('sync-btn');
-var pt;
-sb.addEventListener('touchstart', function(){pt=setTimeout(openCfg,700);}, {passive:true});
-sb.addEventListener('touchend', function(){clearTimeout(pt);}, {passive:true});
-sb.addEventListener('click', function(){
-  var c=getCfg();
-  if(c.sid&&c.gak) sync(); else openCfg();
-});
+// ── TOPBAR LONG PRESS → CONFIG ──
+let pressTimer;
+document.getElementById('sync-btn').addEventListener('touchstart', () => { pressTimer = setTimeout(openConfig, 800); });
+document.getElementById('sync-btn').addEventListener('touchend', () => clearTimeout(pressTimer));
 
-// ── BOOT — runs immediately ──
-demoData();
-render();
-showNote();
+// ── INIT ──
+window.addEventListener('load', () => {
+  const { sheetId, apiKey } = loadConfig();
+  if (sheetId && apiKey) {
+    syncSheets();
+  } else {
+    loadDemo();
+    render();
+    showConfigPrompt();
+  }
+});
 </script>
 </body>
 </html>
