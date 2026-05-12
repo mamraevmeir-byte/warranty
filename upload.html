@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>העלאת מסמך</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1117;--bg2:#181c27;--bg3:#1e2235;--bd:rgba(255,255,255,0.18);--tx:#f0f2ff;--mu:#a0a5c0;--gr:#22c55e;--bl:#6366f1;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--tx);-webkit-text-fill-color:var(--tx);font-family:'Heebo',-apple-system,sans-serif;padding:20px;min-height:100vh;}
+h1{font-size:20px;font-weight:700;margin-bottom:6px;padding-top:40px;}
+.sub{font-size:13px;color:var(--mu);-webkit-text-fill-color:var(--mu);margin-bottom:24px;}
+.slot{margin-bottom:12px;}
+.slot-label{font-size:12px;color:var(--mu);-webkit-text-fill-color:var(--mu);margin-bottom:6px;font-weight:500;text-transform:uppercase;letter-spacing:0.5px;}
+.btn{display:block;width:100%;background:var(--bg3);border:1.5px dashed var(--bd);border-radius:12px;padding:18px;text-align:center;cursor:pointer;font-size:15px;font-weight:500;color:var(--tx);-webkit-text-fill-color:var(--tx);}
+.btn:active{opacity:0.8;}
+.status{margin-top:6px;padding:8px 12px;border-radius:8px;font-size:13px;display:none;}
+.status.ok{background:rgba(34,197,94,0.12);color:var(--gr);-webkit-text-fill-color:var(--gr);}
+.status.err{background:rgba(239,68,68,0.12);color:#ef4444;-webkit-text-fill-color:#ef4444;}
+.status.loading{background:var(--bg3);color:var(--mu);-webkit-text-fill-color:var(--mu);}
+input[type=file]{display:none;}
+.back{display:block;margin-top:24px;text-align:center;color:var(--bl);-webkit-text-fill-color:var(--bl);font-size:15px;text-decoration:none;padding:14px;}
+.done-btn{display:none;width:100%;background:var(--bl);border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:600;color:#fff;-webkit-text-fill-color:#fff;cursor:pointer;margin-top:8px;}
+</style>
+</head>
+<body>
+<h1>📎 העלאת מסמכים</h1>
+<div class="sub" id="product-name">בחר קבצים להעלאה</div>
+
+<div class="slot">
+  <div class="slot-label">📄 חשבונית רכישה</div>
+  <button class="btn" onclick="document.getElementById('f0').click()">לחץ לבחירת קובץ</button>
+  <input type="file" id="f0" accept="image/*,application/pdf" onchange="upload(this,0)">
+  <div class="status" id="s0"></div>
+</div>
+<div class="slot">
+  <div class="slot-label">🛡️ תעודת אחריות</div>
+  <button class="btn" onclick="document.getElementById('f1').click()">לחץ לבחירת קובץ</button>
+  <input type="file" id="f1" accept="image/*,application/pdf" onchange="upload(this,1)">
+  <div class="status" id="s1"></div>
+</div>
+<div class="slot">
+  <div class="slot-label">📋 פוליסת ביטוח</div>
+  <button class="btn" onclick="document.getElementById('f2').click()">לחץ לבחירת קובץ</button>
+  <input type="file" id="f2" accept="image/*,application/pdf" onchange="upload(this,2)">
+  <div class="status" id="s2"></div>
+</div>
+<div class="slot">
+  <div class="slot-label">📸 תמונת מוצר</div>
+  <button class="btn" onclick="document.getElementById('f3').click()">לחץ לבחירת קובץ</button>
+  <input type="file" id="f3" accept="image/*,application/pdf" onchange="upload(this,3)">
+  <div class="status" id="s3"></div>
+</div>
+<div class="slot">
+  <div class="slot-label">📁 מסמך נוסף</div>
+  <button class="btn" onclick="document.getElementById('f4').click()">לחץ לבחירת קובץ</button>
+  <input type="file" id="f4" accept="image/*,application/pdf" onchange="upload(this,4)">
+  <div class="status" id="s4"></div>
+</div>
+
+<button class="done-btn" id="done-btn" onclick="goBack()">✅ סיום — חזור לאפליקציה</button>
+<a class="back" href="warranty-app_5.html">← חזור ללא העלאה</a>
+
+<script>
+var gasUrl = localStorage.getItem('gas_url') || '';
+var results = [{},{},{},{},{}];
+var uploadCount = 0;
+
+// Get product name from URL params
+var params = new URLSearchParams(window.location.search);
+var productName = params.get('name');
+var returnRow = params.get('row');
+if(productName) document.getElementById('product-name').textContent = 'מוצר: ' + productName;
+
+function compressImage(file, cb) {
+  if(file.type==='application/pdf'||file.size<300*1024){
+    var r=new FileReader(); r.onload=function(e){cb(e.target.result,file.name,file.type);}; r.readAsDataURL(file); return;
+  }
+  var img=new Image(), r=new FileReader();
+  r.onload=function(e){
+    img.onload=function(){
+      var cv=document.createElement('canvas'),max=800,w=img.width,h=img.height;
+      if(w>max||h>max){if(w>h){h=Math.round(h*max/w);w=max;}else{w=Math.round(w*max/h);h=max;}}
+      cv.width=w;cv.height=h;cv.getContext('2d').drawImage(img,0,0,w,h);
+      cb(cv.toDataURL('image/jpeg',0.65),file.name.split('.')[0]+'.jpg','image/jpeg');
+    };
+    img.src=e.target.result;
+  };
+  r.readAsDataURL(file);
+}
+
+function upload(input, idx) {
+  var file = input.files[0]; if(!file) return;
+  var s = document.getElementById('s'+idx);
+  s.style.display='block'; s.className='status loading';
+  s.textContent='⏳ מכין קובץ...';
+  
+  compressImage(file, function(dataUrl, fileName, mimeType) {
+    var base64 = dataUrl.split(',')[1];
+    var mb = Math.round(base64.length*0.75/1024/10)/100;
+    s.textContent='⏳ מעלה '+mb+'MB...';
+    
+    if(!gasUrl) {
+      results[idx]={name:fileName,url:''}; 
+      s.className='status ok'; s.textContent='📎 '+fileName+' (ללא חיבור Sheets)';
+      checkDone(); return;
+    }
+    
+    var formData='action=uploadFile&fileName='+encodeURIComponent(fileName)+'&mimeType='+encodeURIComponent(mimeType)+'&fileData='+encodeURIComponent(base64);
+    fetch(gasUrl,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:formData})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.success){
+        results[idx]={name:d.fileName||fileName,url:d.fileUrl||''};
+        s.className='status ok'; s.textContent='✅ '+results[idx].name;
+        checkDone();
+      } else { s.className='status err'; s.textContent='❌ '+(d.error||'שגיאה'); }
+    })
+    .catch(function(e){ s.className='status err'; s.textContent='❌ '+e.message; });
+  });
+}
+
+function checkDone() {
+  uploadCount++;
+  document.getElementById('done-btn').style.display='block';
+}
+
+function goBack() {
+  // Save results to localStorage so main app can read them
+  localStorage.setItem('upload_results', JSON.stringify(results));
+  localStorage.setItem('upload_row', returnRow||'');
+  window.location.href='warranty-app_5.html?uploaded=1';
+}
+</script>
+</body>
+</html>
