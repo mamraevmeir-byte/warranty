@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{background:#111;color:#fff;font-family:sans-serif;padding:20px;}
+.upload-area{background:#1e2235;border:1.5px dashed rgba(255,255,255,0.3);border-radius:12px;padding:20px;text-align:center;position:relative;overflow:hidden;margin-bottom:10px;}
+.upload-area input[type=file]{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer;z-index:10;}
+</style>
+</head>
+<body>
+<h2>Upload Test</h2>
+<div class="upload-area">
+  <div id="lbl0">📄 חשבונית</div>
+  <input type="file" accept="image/*,application/pdf" onchange="handleFile(this,0)">
+</div>
+<div id="status">לא נבחר קובץ</div>
+<script>
+function handleFile(input, idx) {
+  var file = input.files[0];
+  if (!file) return;
+  document.getElementById('status').textContent = 'נבחר: ' + file.name + ' (' + Math.round(file.size/1024) + 'KB)';
+  document.getElementById('lbl'+idx).textContent = '✅ ' + file.name;
+}
+</script>
+</body>
+</html>
