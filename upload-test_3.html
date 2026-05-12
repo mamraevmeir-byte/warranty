@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{background:#111;color:#fff;font-family:sans-serif;padding:20px;}
+.btn{background:#1e2235;border:1.5px dashed rgba(255,255,255,0.3);border-radius:12px;padding:20px;text-align:center;margin-bottom:10px;display:block;width:100%;cursor:pointer;font-size:16px;color:#fff;}
+</style>
+</head>
+<body>
+<h2>Upload Test v4</h2>
+<button class="btn" onclick="document.getElementById('f0').click()">📄 חשבונית</button>
+<input type="file" id="f0" accept="image/*" style="display:none" onchange="sel(this,0)">
+<button class="btn" onclick="document.getElementById('f1').click()">🛡️ אחריות</button>
+<input type="file" id="f1" accept="image/*" style="display:none" onchange="sel(this,1)">
+<div id="status">לא נבחר</div>
+<script>
+function sel(input,idx){
+  document.getElementById('status').textContent='✅ '+input.files[0].name;
+}
+</script>
+</body>
+</html>
